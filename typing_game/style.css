@@ -1,0 +1,325 @@
+/* Apple-inspired Design */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #1d1d1f;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 12px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+}
+
+body > p {
+  font-size: 21px;
+  font-weight: 400;
+  color: #86868b;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 0 48px 0;
+  line-height: 1.5;
+}
+
+.board {
+  max-width: 820px;
+  width: 100%;
+  padding: 48px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.quote {
+  min-height: 80px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 24px;
+  color: #1d1d1f;
+  letter-spacing: -0.3px;
+}
+
+.quote span {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.message {
+  min-height: 32px;
+  color: #06c;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 24px;
+  letter-spacing: -0.2px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#typed-value {
+  flex: 1;
+  padding: 14px 18px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 17px;
+  font-weight: 400;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1d1d1f;
+  letter-spacing: -0.2px;
+}
+
+#typed-value::placeholder {
+  color: #86868b;
+}
+
+#typed-value:focus {
+  border-color: #06c;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+#typed-value:disabled {
+  background: rgba(0, 0, 0, 0.03);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button {
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: none;
+  background: #06c;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.2px;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+button:hover:not(:disabled) {
+  background: #0077ed;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 102, 204, 0.3);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 102, 204, 0.2);
+}
+
+button.secondary {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1d1d1f;
+  box-shadow: none;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.stats {
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: #86868b;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stats span {
+  color: #1d1d1f;
+  font-weight: 600;
+}
+
+/* Game states */
+.highlight {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+  padding: 4px 8px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.error {
+  border-color: #ff3b30 !important;
+  background-color: rgba(255, 59, 48, 0.05) !important;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* Input typing effect */
+.typing:not(.error) {
+  border-color: #06c;
+  background: #fff;
+  box-shadow: 
+    0 0 0 4px rgba(0, 102, 204, 0.15),
+    0 4px 12px rgba(0, 102, 204, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Modal - Apple style */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+  }
+  to { 
+    opacity: 1; 
+  }
+}
+
+.hidden { 
+  display: none; 
+}
+
+.modal {
+  width: min(480px, 90vw);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 1px rgba(0, 0, 0, 0.2);
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+  from { 
+    transform: scale(0.8); 
+    opacity: 0; 
+  }
+  to { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+.modal h2 {
+  margin: 0 0 24px 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.modal p {
+  font-size: 19px;
+  color: #1d1d1f;
+  margin: 12px 0;
+  font-weight: 500;
+}
+
+.modal span {
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 28px;
+}
+
+.modal .modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 32px;
+}
+
+.modal button {
+  flex: 1;
+  padding: 16px 24px;
+  font-size: 17px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 40px;
+  }
+  
+  body > p {
+    font-size: 17px;
+  }
+  
+  .board {
+    padding: 32px 24px;
+  }
+  
+  .quote {
+    font-size: 20px;
+  }
+  
+  .modal {
+    padding: 32px 24px;
+  }
+  
+  .modal h2 {
+    font-size: 28px;
+  }
+}

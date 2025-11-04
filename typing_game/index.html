@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Typing game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Typing game!</h1>
+  <p>Practice your typing skills with a quote from Sherlock Holmes. Click <strong>Start</strong> to begin!</p>
+
+  <div class="board">
+    <p id="quote" class="quote"></p>
+    <p id="message" class="message"></p>
+
+    <div class="controls">
+      <input type="text" aria-label="current word" id="typed-value" autocomplete="off" disabled />
+      <button type="button" id="start">Start</button>
+    </div>
+
+    <div class="stats">
+      Best: <span id="best">—</span>
+    </div>
+  </div>
+
+  <!-- Result Modal -->
+  <div id="result-overlay" class="overlay hidden" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h2 id="modal-title">Result</h2>
+      <p class="modal-time">Time: <span id="result-seconds"></span> s</p>
+      <p class="modal-best">Best: <span id="result-best"></span> s</p>
+      <div class="modal-actions">
+        <button id="play-again">Play again</button>
+        <button id="close-modal" class="secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
